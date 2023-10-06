@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import NavBar from "./components/NavBar";
 import NavSearch from "./components/NavSearch";
 import NavNumResult from "./components/NavNumResult";
@@ -17,15 +17,16 @@ export const KEY = "a0cadc6b";
 export default function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+
+  const closeMovieHandler = useCallback(() => {
+    setSelectedId(null);
+  }, []);
+
   const [watched, setWatched] = useLocalStorage([], "Watched");
   const { movies, isLoading, error } = useMovies(KEY, query, closeMovieHandler);
 
   function selectedIDHandler(id) {
     setSelectedId((selectedId) => (selectedId === id ? null : id));
-  }
-
-  function closeMovieHandler() {
-    setSelectedId(null);
   }
 
   function addWatchedHandler(newWatched) {
