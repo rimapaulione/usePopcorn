@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 export function useMovies(KEY, query, callback) {
   const [movies, setMovies] = useState([]);
@@ -47,7 +47,7 @@ export function useMovies(KEY, query, callback) {
         controller.abort();
       };
     },
-    [query, callback]
+    [query, callback, KEY]
   );
   return { movies, isLoading, error };
 }
